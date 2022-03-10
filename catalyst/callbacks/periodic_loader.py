@@ -90,11 +90,7 @@ class PeriodicLoaderCallback(Callback):
         for name, loader in runner.loaders.items():
             self.loaders[name] = loader
         # experiment validation loader
-        is_loaders_match = all(
-            loader in runner.loaders for loader in self.loader_periods.keys()
-        )
-        is_same_loaders_number = len(self.loader_periods) == len(runner.loaders)
-        if is_same_loaders_number and is_loaders_match:
+        if set(runner.loaders.keys()) == set(self.loader_periods.keys()):
             # find potential epoch with zero loaders
             zero_loaders_epochs = list(
                 filter(
